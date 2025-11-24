@@ -1,0 +1,23 @@
+{
+  "name": "desafio-cypress-api-qa",
+  "version": "1.0.0",
+  "description": "Testes de API ServeRest com Cypress",
+  "scripts": {
+    "test:api": "cypress run --spec \"cypress/e2e/api/**/*\"",
+    "test:auth": "cypress run --spec \"cypress/e2e/api/authentication.cy.js\"",
+    "test:users": "cypress run --spec \"cypress/e2e/api/users.cy.js\"",
+    "test:products": "cypress run --spec \"cypress/e2e/api/products.cy.js\"",
+    "test:carts": "cypress run --spec \"cypress/e2e/api/carts.cy.js\"",
+    "cy:open": "cypress open",
+    "test:api": "cypress run --spec \"cypress/e2e/api/**/*\"",
+    "test:api:report": "cypress run --spec \"cypress/e2e/api/**/*\" --reporter mochawesome",
+    "test:coverage": "npm run test:api -- --reporter cypress-multi-reporters"
+  },
+  "devDependencies": {
+    "cypress": "^13.6.0",
+    "mochawesome": "^7.1.3",
+    "mochawesome-merge": "^4.3.0",
+    "mochawesome-report-generator": "^6.2.0"
+  }
+  
+}
