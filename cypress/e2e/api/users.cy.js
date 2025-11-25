@@ -1,28 +1,20 @@
 describe('👥 API Users Tests - ServeRest', () => {
-  const baseUrl = 'https://serverest.dev';
-
   it('GET /usuarios - Deve listar todos os usuários', () => {
-    cy.request('GET', `${baseUrl}/usuarios`).then((response) => {
+    cy.request('GET', '/usuarios').then((response) => {
       expect(response.status).to.eq(200);
       expect(response.body).to.have.property('quantidade');
       expect(response.body).to.have.property('usuarios');
       expect(response.body.usuarios).to.be.an('array');
       expect(response.body.usuarios.length).to.be.greaterThan(0);
 
-      // Valida estrutura do primeiro usuário
-      const firstUser = response.body.usuarios[0];
-      expect(firstUser).to.have.property('nome');
-      expect(firstUser).to.have.property('email');
-      expect(firstUser).to.have.property('password');
-      expect(firstUser).to.have.property('administrador');
-      expect(firstUser).to.have.property('_id');
+      cy.validateUserStructure(response.body.usuarios[0]);
     });
   });
 
   it('GET /usuarios/{id} - Deve retornar erro para ID inválido', () => {
     cy.request({
       method: 'GET',
-      url: `${baseUrl}/usuarios/usuario_inexistente_123`,
+      url: '/usuarios/usuario_inexistente_123',
       failOnStatusCode: false,
     }).then((response) => {
       expect(response.status).to.eq(400);

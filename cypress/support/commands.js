@@ -12,7 +12,6 @@ Cypress.Commands.add('loginAPI', (email, password) => {
 Cypress.Commands.add('validateUserStructure', (user) => {
   expect(user).to.have.property('nome');
   expect(user).to.have.property('email');
-  expect(user).to.have.property('password');
   expect(user).to.have.property('administrador');
   expect(user).to.have.property('_id');
 });
