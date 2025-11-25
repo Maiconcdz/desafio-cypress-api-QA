@@ -1,19 +1,29 @@
+
 {
   "name": "desafio-cypress-api-qa",
   "version": "1.0.0",
   "description": "Testes de API ServeRest com Cypress",
   "scripts": {
+    "prepare": "husky install",
     "test": "npm run test:api",
     "test:open": "cypress open",
     "test:api": "cypress run --spec \"cypress/e2e/api/**/*\"",
     "test:ci": "cypress run --headless --reporter mochawesome --reporter-options reportDir=mochawesome-report,overwrite=false,html=false,json=true",
     "test:api:report": "cypress run --spec \"cypress/e2e/api/**/*\" --reporter mochawesome --reporter-options reportDir=mochawesome-report,overwrite=false,html=false,json=true",
-    "report:full": "npm run clean:reports && npm run test:api:report && npm run merge:reports && npm run generate:report",
-    "merge:reports": "node -e \"const {execSync}=require('child_process'); const out=execSync('npx mochawesome-merge mochawesome-report/mochawesome*.json'); require('fs').writeFileSync('mochawesome-report/combined.json', out);\"",
+    "report:full": "npm run clean:reports && npm run test:api:report && npm run merge:reports && npm run generate:report && npm run open:report",
+    "merge:reports": "rimraf mochawesome-report/combined.json && node -e \"const {execSync}=require('child_process'); const out=execSync('npx mochawesome-merge mochawesome-report/mochawesome*.json'); require('fs').writeFileSync('mochawesome-report/combined.json', out);\"",
     "generate:report": "marge mochawesome-report/combined.json -f report -o mochawesome-report",
     "clean:reports": "rimraf mochawesome-report",
+    "open:report": "cmd /c start \"\" \"mochawesome-report/report.html\"",
     "lint": "eslint \"cypress/**/*.{js,ts,cy.js,cy.ts}\" --ext .js,.ts",
     "format": "prettier --write \"cypress/**/*.{js,ts,cy.js,cy.ts}\""
+  },
+  "lint-staged": {
+    "cypress/**/*.{js,ts,cy.js,cy.ts}": [
+      "eslint --fix",
+      "prettier --write",
+      "git add"
+    ]
   },
   "devDependencies": {
     "cypress": "^13.17.0",
@@ -25,6 +35,8 @@
     "mochawesome-merge": "^4.3.0",
     "mochawesome-report-generator": "^6.2.0",
     "prettier": "^3.6.2",
-    "rimraf": "^5.0.0"
+    "rimraf": "^5.0.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^14.0.0"
   }
 }
