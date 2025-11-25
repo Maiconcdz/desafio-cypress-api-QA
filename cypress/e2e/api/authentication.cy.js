@@ -1,15 +1,12 @@
-describe('🔐 API Authentication Tests - ServeRest', () => {
-  const baseUrl = 'https://serverest.dev';
+// ...existing code...
+describe('API Authentication Tests - ServeRest', () => {
+  const validEmail = Cypress.env('VALID_USER_EMAIL') || 'fulano@qa.com';
+  const validPassword = Cypress.env('VALID_USER_PASSWORD') || 'teste';
+  const invalidEmail = 'invalido@qa.com';
+  const invalidPassword = 'senhaerrada';
 
   it('POST /login - Deve fazer login com credenciais válidas', () => {
-    cy.request({
-      method: 'POST',
-      url: `${baseUrl}/login`,
-      body: {
-        email: 'fulano@qa.com',
-        password: 'teste',
-      },
-    }).then((response) => {
+    cy.loginAPI(validEmail, validPassword).then((response) => {
       expect(response.status).to.eq(200);
       expect(response.body).to.have.property('message', 'Login realizado com sucesso');
       expect(response.body).to.have.property('authorization');
@@ -18,13 +15,11 @@ describe('🔐 API Authentication Tests - ServeRest', () => {
   });
 
   it('POST /login - Não deve fazer login com credenciais inválidas', () => {
+    // usar cy.request direto com failOnStatusCode false via comando ou manualmente
     cy.request({
       method: 'POST',
-      url: `${baseUrl}/login`,
-      body: {
-        email: 'invalido@qa.com',
-        password: 'senhaerrada',
-      },
+      url: '/login',
+      body: { email: invalidEmail, password: invalidPassword },
       failOnStatusCode: false,
     }).then((response) => {
       expect(response.status).to.eq(401);
@@ -32,3 +27,4 @@ describe('🔐 API Authentication Tests - ServeRest', () => {
     });
   });
 });
+// ...existing code...
