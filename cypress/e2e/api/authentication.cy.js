@@ -1,5 +1,5 @@
 describe('🔐 API Authentication Tests - ServeRest', () => {
-  const baseUrl = 'https://serverest.dev'
+  const baseUrl = 'https://serverest.dev';
 
   it('POST /login - Deve fazer login com credenciais válidas', () => {
     cy.request({
@@ -7,15 +7,15 @@ describe('🔐 API Authentication Tests - ServeRest', () => {
       url: `${baseUrl}/login`,
       body: {
         email: 'fulano@qa.com',
-        password: 'teste'
-      }
+        password: 'teste',
+      },
     }).then((response) => {
-      expect(response.status).to.eq(200)
-      expect(response.body).to.have.property('message', 'Login realizado com sucesso')
-      expect(response.body).to.have.property('authorization')
-      expect(response.body.authorization).to.include('Bearer')
-    })
-  })
+      expect(response.status).to.eq(200);
+      expect(response.body).to.have.property('message', 'Login realizado com sucesso');
+      expect(response.body).to.have.property('authorization');
+      expect(response.body.authorization).to.include('Bearer');
+    });
+  });
 
   it('POST /login - Não deve fazer login com credenciais inválidas', () => {
     cy.request({
@@ -23,12 +23,12 @@ describe('🔐 API Authentication Tests - ServeRest', () => {
       url: `${baseUrl}/login`,
       body: {
         email: 'invalido@qa.com',
-        password: 'senhaerrada'
+        password: 'senhaerrada',
       },
-      failOnStatusCode: false
+      failOnStatusCode: false,
     }).then((response) => {
-      expect(response.status).to.eq(401)
-      expect(response.body).to.have.property('message', 'Email e/ou senha inválidos')
-    })
-  })
-})
+      expect(response.status).to.eq(401);
+      expect(response.body).to.have.property('message', 'Email e/ou senha inválidos');
+    });
+  });
+});

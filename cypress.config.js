@@ -1,3 +1,4 @@
+// ...existing code...
 const { defineConfig } = require('cypress')
 
 module.exports = defineConfig({
@@ -5,6 +6,7 @@ module.exports = defineConfig({
     baseUrl: 'https://serverest.dev',
     setupNodeEvents(on, config) {
       // implement node event listeners here
+      return config;
     },
     specPattern: 'cypress/e2e/**/*.cy.{js,jsx,ts,tsx}'
   },
@@ -13,3 +15,4 @@ module.exports = defineConfig({
   video: false,
   screenshotOnRunFailure: false
 })
+// ...existing code...
